@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="40.0" prefHeight="595.0" prefWidth="563.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="application.EjercicioController">
+   <top>
+      <ImageView fitHeight="163.0" fitWidth="283.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../../../../../../Logo%20Cenec%20Málaga.png" />
+         </image>
+         <BorderPane.margin>
+            <Insets top="50.0" />
+         </BorderPane.margin>
+      </ImageView>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="406.0" prefWidth="323.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Iniciar sesión">
+               <font>
+                  <Font name="Roboto Condensed" size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="Nombre">
+               <font>
+                  <Font name="Roboto Condensed" size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="nombre" maxHeight="-Infinity" maxWidth="-Infinity" onAction="#mostrarNombre" prefHeight="26.0" prefWidth="286.0">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Label text="Contraseña">
+               <font>
+                  <Font name="Roboto Condensed" size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Label>
+            <PasswordField fx:id="password" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="286.0">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </PasswordField>
+            <Button fx:id="btnEntrar" mnemonicParsing="false" onAction="#mostrarBienvenida" text="Entrar">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </Button>
+            <Label fx:id="lblMensaje" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="190.0" textFill="RED">
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
