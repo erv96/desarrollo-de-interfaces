@@ -2,7 +2,9 @@ package application;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,7 +23,7 @@ public class indexController {
 	private ChoiceBox cbAutor;
 
 	@FXML
-	private ChoiceBox cbPaginas;
+	private TextField txtPaginas;
 	
 	@FXML
 	private TableView <Libro> tableLibros;
@@ -38,6 +40,9 @@ public class indexController {
 	@FXML
 	private TableColumn <Libro, Integer> columPaginas;
 	
+	@FXML
+	private Button btnAnadir;
+	
 	private ObservableList<Libro> listaLibros = FXCollections.observableArrayList(
 			new Libro("La biblia","Planeta","Jesus",500));
 
@@ -53,7 +58,28 @@ public class indexController {
 		columAutor.setCellValueFactory(new PropertyValueFactory<>("autor"));
 		
 		tableLibros.setItems(listaLibros);
+		
 
 
+	}
+	
+	@FXML
+	public void anadirLibro(ActionEvent event) {
+		
+		Libro l = new Libro(
+				txtTitulo.getText(),
+				txtEditorial.getText(),
+				cbAutor.getValue().toString(),
+				Integer.parseInt(txtPaginas.getText().toString())
+				);
+		listaLibros.add(l);
+	}
+	
+	public void borrarLibro(ActionEvent event) {
+		System.out.println("Borrando un libro");
+		//Libro libroABorrar = new Libro();
+		
+		//listaLibros.remove(libroABorrar);
+		
 	}
 }
