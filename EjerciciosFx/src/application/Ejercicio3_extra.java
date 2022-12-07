@@ -60,21 +60,97 @@ public class Ejercicio3_extra extends Application {
 			}
 
 		});
+		
 
 		// 2ºFILA
 		Button b4 = new Button("4");
+		b4.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				String numero = lbl_numero.getText() + "4";
+				lbl_numero.setText(numero);
+			}
+			
+		});
+		
+		
 		Button b5 = new Button("5");
+		
+		b5.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				String numero = lbl_numero.getText() + "5";
+				lbl_numero.setText(numero);
+			}
+			
+		});
+		
 		Button b6 = new Button("6");
+		
+		b6.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				String numero = lbl_numero.getText() + "6";
+				lbl_numero.setText(numero);
+			}
+			
+		});
 		Button bLlamar = new Button("Llamar");
 
 		// 3ºFILA
 		Button b1 = new Button("1");
+		
+		b1.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				String numero = lbl_numero.getText() + "1";
+				lbl_numero.setText(numero);
+			}
+			
+		});
+		
 		Button b2 = new Button("2");
+		
+		b2.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				String numero = lbl_numero.getText() + "2";
+				lbl_numero.setText(numero);
+			}
+			
+		});
+		
 		Button b3 = new Button("3");
+		
+		b3.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				String numero = lbl_numero.getText() + "3";
+				lbl_numero.setText(numero);
+			}
+			
+		});
+		
 		Button bColgar = new Button("Colgar");
 
 		// 4ºFILA
 		Button b0 = new Button("0");
+		
+		b0.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				String numero = lbl_numero.getText() + "0";
+				lbl_numero.setText(numero);
+			}
+			
+		});
 
 		grid.add(b7, 0, 0);
 		grid.add(b8, 1, 0);
