@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,16 +22,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class EditorialController {
 
 	@FXML
-	private TextField txtNombre;
+	private ChoiceBox cbNombre;
 
 	@FXML
 	private TextField txtFundador;
 
 	@FXML
 	private DatePicker myDatePicker;
-
-	@FXML
-	private Button btnAnadir;
 
 	@FXML
 	private TableView<Editorial> tableEditoriales;
@@ -43,18 +41,23 @@ public class EditorialController {
 
 	@FXML
 	private TableColumn<Editorial, String> columFecha;
-
+	
 	private ObservableList<Editorial> listaEditorial = FXCollections.observableArrayList();
+	
+	private ObservableList<String> listaNombre = FXCollections.observableArrayList("Marvel","DC");
 
+	
 	@FXML
 	private void initialize() {
-		columNombre.setCellValueFactory(new PropertyValueFactory("nombre"));
+		cbNombre.setItems(listaNombre);
+		columNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
 		columFundador.setCellValueFactory(new PropertyValueFactory("fundador"));
 		columFecha.setCellValueFactory(new PropertyValueFactory("fecha"));
-
+		
+		ObservableList listaEditorialesBD = getEditBd();
+		
 		tableEditoriales.setItems(getEditBd());
-		
-		
+
 	}
 
 	private ObservableList<Editorial> getEditBd() {
@@ -75,9 +78,9 @@ public class EditorialController {
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
-				Editorial edit = new Editorial(rs.getString("nombre"), rs.getString("fundador_fundadores"),
+				Editorial edit = new Editorial(rs.getInt("id"),rs.getString("nombre"), rs.getString("fundador_fundadores"),
 						rs.getString("fecha_fundacion"));
-				listaEditorial.add(edit);
+				listaEditorialesBd.add(edit);
 			}
 
 			// CERRAMOS LA CONEXIÓN
@@ -86,14 +89,14 @@ public class EditorialController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		return listaEditorial;
+		return listaEditorialesBd;
 	}
 
 	public void anadirEditorial(ActionEvent event) {
-		Editorial l = new Editorial(txtNombre.getText(), txtFundador.getText(), myDatePicker.getValue().toString());
+		Editorial l = new Editorial(cbNombre.getValue().toString(), txtFundador.getText(), myDatePicker.getValue().toString());
 		listaEditorial.add(l);
 
-		txtNombre.clear();
+		cbNombre.getSelectionModel();
 		txtFundador.clear();
 		myDatePicker.getEditor().clear();
 
@@ -117,46 +120,54 @@ public class EditorialController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		ObservableList listaEditorialesBD = getEditBd();
+
+		tableEditoriales.setItems(getEditBd());
 	}
-
+	
+	@FXML
 	public void borrarEditorial(ActionEvent event) {
-		System.out.println("Borrando una editorial");
-
 		int indiceSeleccionado = tableEditoriales.getSelectionModel().getSelectedIndex();
 
-		System.out.println("Indice a borrar: " + indiceSeleccionado);
+		
 		if (indiceSeleccionado <= -1) {
 			Alert alerta = new Alert(AlertType.ERROR);
 			alerta.setTitle("ERROR AL BORRAR");
-			alerta.setHeaderText("No se ha seleccionado ninguna editorial al borar");
+			alerta.setHeaderText("No se ha seleccionado ninguna Editorial al borrar");
 			alerta.setContentText("Por favor selecciona una editorial para borrarla");
 			alerta.showAndWait();
 		} else {
-			tableEditoriales.getItems().remove(indiceSeleccionado);
-			tableEditoriales.getSelectionModel().clearSelection();
+			// NOS CONECTAMOS A LA BD
+
+			DatabaseConnection dbConnection = new DatabaseConnection();
+			Connection connection = dbConnection.getConnection();
+
+			try {
+				String query = "Delete from editoriales Where id=?";
+				PreparedStatement ps = connection.prepareStatement(query);
+				Editorial libro = tableEditoriales.getSelectionModel().getSelectedItem();
+				ps.setInt(1, libro.getId());	
+				ps.executeUpdate();
+				
+				String query2 = "ALTER TABLE editoriales AUTO_INCREMENT = 1;";
+				PreparedStatement ps2 = connection.prepareStatement(query2);
+				ps2.executeUpdate();
+				
+				tableEditoriales.getSelectionModel().clearSelection();
+				
+				ObservableList listaEditBD = getEditBd();
+				tableEditoriales.setItems(listaEditBD);
+				
+				// CERRAMOS LA CONEXIÓN
+				connection.close();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
-		
-		//Editorial l = new Editorial()
-		
+
 		
 
-		// NOS CONECTAMOS A LA BD
-
-		DatabaseConnection dbConnection = new DatabaseConnection();
-		Connection connection = dbConnection.getConnection();
-		
-		try {
-			String query = "Delete from editoriales Where id=?";
-			PreparedStatement ps = connection.prepareStatement(query);
-		
-
-			ps.executeUpdate();
-
-			// CERRAMOS LA CONEXIÓN
-			connection.close();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 	}
 }
